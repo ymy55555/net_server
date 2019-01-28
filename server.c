@@ -16,7 +16,7 @@ int main(int argc,char *argv[])
 		return NORMAL_EXIT;
 	}
 		
-	if(SUCCESS != create_mian_thread())
+	if(SUCCESS != create_main_thread())
 	{
 	    MY_PRINTF("main thread create init is failed.\n");
 		return NORMAL_EXIT;
