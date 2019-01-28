@@ -14,7 +14,7 @@ SER_DST = ${patsubst %.c, %, $(SER_SRC)}
 
 #分别编译文件 
 all : 
-	$(CC)  $(CFLAGS) -o $(SER_DST) $(SER_SRC) -lpthread
+	$(CC)  $(CFLAGS) $(SER_DST) $(SER_SRC) -lpthread
 
 .PHONY: clean undate_date
 
