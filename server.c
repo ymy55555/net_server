@@ -1,4 +1,5 @@
 #include "server_common.h"
+#include "common.h"
 extern int gsys_state;
 extern pthread_t gtid[3];
 int main(int argc,char *argv[])
@@ -7,10 +8,10 @@ int main(int argc,char *argv[])
     signal(SIGTERM, common_handle_sig);
 	if(2 != argc)
 	{
-		MY_PRINT("The number of parameters is incorrect.\n");
+		MY_PRINTF("The number of parameters is incorrect.\n");
 		return NORMAL_EXIT;
 	}
-    if(SUCCESS != soctet_init(argv[1]))
+    if(SUCCESS != socKet_init(argv))
 	{
 		MY_PRINTF("soctet init is failed.\n");
 		return NORMAL_EXIT;
