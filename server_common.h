@@ -30,7 +30,7 @@ int cli_data_handle(void *arg);
 int read_data_handle(void *arg);
 int write_data_handle(void *arg);
 int detect_pthread(pthread_t tid);
-int create_mian_thread(void);
+int create_main_thread(void);
 int soctet_init(char *argv);
 
 #endif
