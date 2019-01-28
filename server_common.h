@@ -1,5 +1,5 @@
-#ifndef __SERVER_H__
-#define __SERVER_H__
+#ifndef __SERVER_COMMON_H__
+#define __SERVER_COMMON_H__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,11 +26,12 @@ typedef struct cli_info{
 	//链表
 }st_cli_info;
 
-int cli_data_handle(void *arg);
-int read_data_handle(void *arg);
-int write_data_handle(void *arg);
-int detect_pthread(pthread_t tid);
-int create_main_thread(void);
-int soctet_init(char *argv);
+extern int cli_data_handle(void *arg);
+extern int read_data_handle(void *arg);
+extern int write_data_handle(void *arg);
+extern int detect_pthread(pthread_t tid);
+extern int create_main_thread(void);
+extern int socKet_init(char *argv[]);
+extern void common_handle_sig(int signo);
 
 #endif
