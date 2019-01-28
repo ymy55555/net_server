@@ -14,7 +14,7 @@ modify:
 int fd = -1;
 pthread_t gtid[3] = {-1, -1, -1};
 int gsys_state = 1;
-int create_mian_thread(void)
+int create_main_thread(void)
 {
 	 pthread_t tid;
 	 int newfd = -1;
