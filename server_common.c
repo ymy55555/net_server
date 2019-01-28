@@ -41,7 +41,7 @@ int create_main_thread(void)
 	return SUCCESS;	 
 }
 
-int soctet_init(char *argv)
+int socKet_init(char *argv[])
 {
     //建立主动套接字
     if((fd = socket(AF_INET,SOCK_STREAM,0)) == -1)
@@ -223,7 +223,7 @@ int detect_pthread(pthread_t tid)
 	return FAILURE;
 }
 
-int common_handle_sig(int signo)
+void common_handle_sig(int signo)
 {
     static int sig_handled = 0;  
     signal(SIGINT, SIG_IGN);
