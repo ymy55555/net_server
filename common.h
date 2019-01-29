@@ -12,6 +12,10 @@
     }while(0)
 		
 	
-	
-	
+enum THREAD_STATE_FLAG
+{
+     THREAD_ALIVE = 1,
+	 THREAD_EXIT,
+	 THREAD_ILLEGAL_SIGNAL,
+};	
 #endif
