@@ -14,16 +14,15 @@ int init_klist(pk_list *pk)
 }
 
 //根据标识取出链表中的数据
-int getdata_klist(pk_list h,int port, void **client_data)
+int getdata_klist(pk_list h,int port, pcli_data *pdata)
 {
     pk_list t;
-	pcli_data pdata;
+	*pdata = (pcli_data)malloc(sizeof(cli_data));
     list_for_each_entry(t,&h->list,list)
    {
-      pdata = (pcli_data)t->clidata;
-	  if(port == pdata->client_port)
+      *pdata = (pcli_data)t->clidata;
+	  if(port == (*pdata)->client_port)
 	  {
-	     *client_data = t->clidata;
 		 return SUCCESS;
 	  }
    }
