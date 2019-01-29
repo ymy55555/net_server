@@ -23,7 +23,7 @@ typedef struct client_data
 }cli_data, *pcli_data;
 
 extern int init_klist(pk_list *pk);
-extern int getdata_klist(pk_list h,int port, void *client_data);
+extern int getdata_klist(pk_list h,int port, void **client_data);
 extern int insert_klist(pk_list h,cli_data data);
 extern int delet_kdata(pk_list h,int port);
 
