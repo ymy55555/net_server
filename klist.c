@@ -14,7 +14,7 @@ int init_klist(pk_list *pk)
 }
 
 //根据标识取出链表中的数据
-int getdata_klist(pk_list h,int port, void *client_data)
+int getdata_klist(pk_list h,int port, void **client_data)
 {
     pk_list t;
 	pcli_data pdata;
@@ -23,7 +23,7 @@ int getdata_klist(pk_list h,int port, void *client_data)
       pdata = (pcli_data)t->clidata;
 	  if(port == pdata->client_port)
 	  {
-	     client_data = t->clidata;
+	     *client_data = t->clidata;
 		 return SUCCESS;
 	  }
    }
@@ -40,13 +40,8 @@ int insert_klist(pk_list h,cli_data data)
     {
        MY_PRINTF("insert kernel list of client data failed.\n");
 	   return FAILURE;
-	}
-	//////////
-	pcli_data pdata;
-	pdata = (pcli_data)malloc(sizeof(cli_data));
-	pdata->client_port = 5001;
-	
-    temp->clidata = (void *)pdata;//(void *)(&data);
+	}	
+    temp->clidata = (void *)(&data);
     list_add_tail(&temp->list,&h->list);
 	return SUCCESS;
 }
