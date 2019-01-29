@@ -5,7 +5,7 @@ int main()
 {
     pk_list pk;
 	cli_data cdata = {0};
-	void **client_data = NULL;
+	void **client_data;
 	pcli_data pdata;
 	*client_data = (void **)malloc(sizeof(cli_data));
 	cdata.client_port = 5001;
