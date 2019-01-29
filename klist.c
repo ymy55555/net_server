@@ -1,5 +1,5 @@
-#include "klist.h"
 #include "common.h"
+#include "klist.h"
 //初始化内核链表所在结构体 
 int init_klist(pk_list *pk)
 {
@@ -13,7 +13,7 @@ int init_klist(pk_list *pk)
 	return SUCCESS;
 }
 
-//根据取出链表中的数据
+//根据某项数据取出链表中的数据,或者查询
 int getdata_klist(pk_list h,void *single_data, int data_flag, void **client_data)
 {
     pk_list t;
@@ -24,7 +24,7 @@ int getdata_klist(pk_list h,void *single_data, int data_flag, void **client_data
       pdata = (pcli_data)t->clidata;
 	  switch(data_flag)
 	  {
-          case GET_CLIENT_FD：
+          case GET_CLIENT_FD:
           	   if(*(int *)single_data == pdata->client_fd)
 	           {
 	     			*client_data = t->clidata;
@@ -52,13 +52,21 @@ int getdata_klist(pk_list h,void *single_data, int data_flag, void **client_data
 		 			return SUCCESS;
 	 		   } 
 	 		   break;
-		  case GET_CLIENT_IP_INFO:
-		       if(0 == strcmp((char *)single_data, pdata->ip_info)
+	 	
+	 	  case GET_LIENT_STATE:
+	 	       if(*(int *)single_data == pdata->client_state)
 	           {
 	     			*client_data = t->clidata;
 		 			return SUCCESS;
 	 		   } 
-	 		   break;
+	 		   break; 
+		  case GET_CLIENT_IP_INFO:
+		       if(0 == strcmp((char *)single_data, pdata->ip_info))
+	           {
+	     			*client_data = t->clidata;
+		 			return SUCCESS;
+	 		   } 
+	 		   break;	 	       
 	 	  default:break;
 	  }
    }
@@ -73,7 +81,7 @@ int insert_klist(pk_list h,cli_data data)
 	temp = (pk_list)malloc(sizeof(k_list));
 	if(NULL == temp)
     {
-       MY_PRINTF("insert kernel list of client data failed.\n");
+       MY_PRINTF("Insert kernel list of client data failed.\n");
 	   return FAILURE;
 	}	
     temp->clidata = (void *)(&data);
@@ -81,8 +89,8 @@ int insert_klist(pk_list h,cli_data data)
 	return SUCCESS;
 }
 
-//链表中删除指定选项,根据端口号
-int delet_kdata(pk_list h,int port)
+//链表中删除指定选项,根据某项数据
+int delet_kdata(pk_list h, void *single_data, int data_flag)
 {
 
     pk_list p,t;
@@ -91,21 +99,189 @@ int delet_kdata(pk_list h,int port)
     while(p != h)
     {
       pdata = (pcli_data)p->clidata; 
-      if(pdata->client_port == port)
+      switch(data_flag)
 	  {
-	       t = p;
-	       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
-	       list_del(&t->list);
-		   return SUCCESS;
+          case GET_CLIENT_FD:
+          	   if(pdata->client_fd == *(int *)single_data)
+			   {
+			       t = p;
+			       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
+			       list_del(&t->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+		  case GET_READ_THREAD_ID:
+		       if(pdata->read_thread_id == *(int *)single_data)
+			   {
+			       t = p;
+			       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
+			       list_del(&t->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+		  case GET_WRITE_THREAD_ID:
+		       if(pdata->write_thread_id == *(int *)single_data)
+			   {
+			       t = p;
+			       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
+			       list_del(&t->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+		  case GET_CLIENT_PORT:
+		       if(pdata->client_port == *(int *)single_data)
+			   {
+			       t = p;
+			       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
+			       list_del(&t->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+	 	  case GET_LIENT_STATE:
+	 	       if(pdata->client_state== *(int *)single_data)
+			   {
+			       t = p;
+			       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
+			       list_del(&t->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break; 
+		  case GET_CLIENT_IP_INFO:
+		       if(0 == strcmp((char *)single_data, pdata->ip_info))
+			   {
+			       t = p;
+			       p = list_entry(p->list.prev,k_list,list);//当前节点prev指向前面节点
+			       list_del(&t->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;	 	       
+	 	  default:break;
 	  }
-	  else
-	  {
-	       p = list_entry(p->list.prev,k_list,list);
-	  }
+      
     }
 	MY_PRINTF("delet data failed from kernel list.\n");
 	return FAILURE;
 }
+
+//根据数据中的某项替换链表当前节点
+int replace_klist(pk_list h,void *single_data, int data_flag, cli_data data)
+{
+
+    pk_list p;
+	pcli_data pdata;
+	pk_list temp;
+    temp = (pk_list)malloc(sizeof(k_list));
+	if(NULL == temp)
+	{
+	   MY_PRINTF("replace kernel list of client data failed.\n");
+	   return FAILURE;
+	}
+	temp->clidata = (void *)(&data);
+    p = list_entry(h->list.prev,k_list,list);//指向头节点的prev
+    while(p != h)
+    {
+      pdata = (pcli_data)p->clidata; 
+      switch(data_flag)
+	  {
+          case GET_CLIENT_FD:
+          	   if(pdata->client_fd == *(int *)single_data)
+			   {
+				   list_replace(&p->list, &temp->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+		  case GET_READ_THREAD_ID:
+		       if(pdata->read_thread_id == *(int *)single_data)
+			   {
+			       list_replace(&p->list, &temp->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+		  case GET_WRITE_THREAD_ID:
+		       if(pdata->write_thread_id == *(int *)single_data)
+			   {
+			       list_replace(&p->list, &temp->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+		  case GET_CLIENT_PORT:
+		       if(pdata->client_port == *(int *)single_data)
+			   {
+			       list_replace(&p->list, &temp->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;
+	 	  case GET_LIENT_STATE:
+	 	       if(pdata->client_state== *(int *)single_data)
+			   {
+			       list_replace(&p->list, &temp->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break; 
+		  case GET_CLIENT_IP_INFO:
+		       if(0 == strcmp((char *)single_data, pdata->ip_info))
+			   {
+			       list_replace(&p->list, &temp->list);
+				   return SUCCESS;
+			   }
+			   else
+			   {
+			       p = list_entry(p->list.prev,k_list,list);
+			   }
+	 		   break;	 	       
+	 	  default:break;
+	  }
+      
+    }
+	MY_PRINTF("replace data failed from kernel list.\n");
+	return FAILURE;
+}
+
+
 
 
 
