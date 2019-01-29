@@ -31,7 +31,7 @@ extern int read_data_handle(void *arg);
 extern int write_data_handle(void *arg);
 extern int detect_pthread(pthread_t tid);
 extern int create_main_thread(void);
-extern int socKet_init(char *argv[]);
+extern int socKet_init(char *argv1);
 extern void common_handle_sig(int signo);
 
 #endif
