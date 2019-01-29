@@ -14,34 +14,8 @@ modify:
 int fd = -1;
 pthread_t gtid[3] = {-1, -1, -1};
 int gsys_state = 1;
-int create_main_thread(void)
-{
-	 pthread_t tid;
-	 int newfd = -1;
-	 st_cli_info stinfo;
-	 struct sockaddr_in cinfo;
-	 socklen_t addr_len = sizeof(cinfo);
-     while(gsys_state) 
-	 {
-		newfd = accept(fd, (struct sockaddr *)&cinfo, &addr_len);
-		if(newfd < 0) 
-		{
-			MY_PRINTF("accept failed!\n");
-			return FAILURE;
-		}
-		if(newfd > 0)
-		{
-		    /* 给客户端结构体赋值*/
-			stinfo.cli_fd = newfd;
-			memcpy(&stinfo.cinfo, &cinfo, sizeof(cinfo));		
-			pthread_create(&tid, NULL, (void *)cli_data_handle, (void *)&stinfo);
-		 }
-    }
-    close(fd);
-	return SUCCESS;	 
-}
 
-int socKet_init(char *argv[])
+int socKet_init(char *argv1)
 {
     //建立主动套接字
     if((fd = socket(AF_INET,SOCK_STREAM,0)) == -1)
@@ -59,7 +33,7 @@ int socKet_init(char *argv[])
     struct sockaddr_in soi;
     bzero(&soi,sizeof(soi));
     soi.sin_family = AF_INET;
-    soi.sin_port = htons(atoi(argv[1]));
+    soi.sin_port = htons(atoi(argv1));
     soi.sin_addr.s_addr = htonl(INADDR_ANY);
     if(bind(fd,(struct sockaddr*)&soi,sizeof(soi)) == -1)
     {
@@ -80,6 +54,28 @@ int socKet_init(char *argv[])
        return FAILURE;   
     }
 	return SUCCESS;
+}
+
+int create_main_thread(void)
+{
+	 pthread_t tid;
+	 int newfd = -1;
+	 st_cli_info stinfo;
+	 struct sockaddr_in cinfo;
+	 socklen_t addr_len = sizeof(cinfo);
+     while(gsys_state) 
+	 {
+		newfd = accept(fd, (struct sockaddr *)&cinfo, &addr_len);
+		if(newfd > 0)
+		{
+		    /* 给客户端结构体赋值*/
+			stinfo.cli_fd = newfd;
+			memcpy(&stinfo.cinfo, &cinfo, sizeof(cinfo));		
+			pthread_create(&tid, NULL, (void *)cli_data_handle, (void *)&stinfo);
+		 }
+    }
+    close(fd);
+	return SUCCESS;	 
 }
 
 int cli_data_handle(void *arg)
@@ -112,7 +108,7 @@ int cli_data_handle(void *arg)
 	int detect_pthread(pthread_t tid);
     while(tell_flag)
 	{
-		if(1 == detect_pthread(t_read_id) && 1 == detect_pthread(t_write_id))
+		if(THREAD_ALIVE == detect_pthread(t_read_id) && THREAD_ALIVE == detect_pthread(t_write_id))
 		{
 		    MY_PRINTF("read and write thread is exited\n");
 			tell_flag = false;
@@ -150,7 +146,7 @@ int read_data_handle(void *arg)
 				break;
 				//强制使写线程退出，此时写线程的写操作返回-1，--------------->未实现
 			}
-			MY_PRINTF("\n---client send data: %s\n",buf);//标识客户端------------->未实现
+			MY_PRINTF("====client send data: %s\n",buf);//标识客户端------------->未实现
 		}
 	}
 	pthread_exit(NULL);
@@ -207,18 +203,18 @@ int detect_pthread(pthread_t tid)
 	if(ESRCH == pthread_kill_err)
 	{
 		
-	   MY_PRINTF("Detection result: Thread exit.\n");
-	   return 1;
+	  //Thread exit
+	   return THREAD_ALIVE;
 	}		
 	else if(EINVAL == pthread_kill_err)
 	{
-	    MY_PRINTF("Detection result: Illegal signal.\n");
-		return 2;
+	   //Illegal signal
+		return THREAD_EXIT;
 	}
 	else
 	{		
-		 MY_PRINTF("Detection result: thread is alive.\n");
-		 return 3;
+		 //thread is alive
+		 return THREAD_ILLEGAL_SIGNAL;
 	}
 	return FAILURE;
 }
@@ -232,7 +228,7 @@ void common_handle_sig(int signo)
     if (!sig_handled && (SIGINT == signo || SIGTERM == signo))
     {  
         sig_handled = 1;
-        //全局退出并释放所有任务，占用内存
+		//释放资源
     }
     exit(1);
 }
