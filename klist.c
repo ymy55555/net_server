@@ -13,53 +13,18 @@ int init_klist(pk_list *pk)
 	return SUCCESS;
 }
 
-//根据取出链表中的数据
-int getdata_klist(pk_list h,void *single_data, int data_flag, void **client_data)
+//根据标识取出链表中的数据
+int getdata_klist(pk_list h,int port, void **client_data)
 {
     pk_list t;
 	pcli_data pdata;
-	
     list_for_each_entry(t,&h->list,list)
    {
       pdata = (pcli_data)t->clidata;
-	  switch(data_flag)
+	  if(port == pdata->client_port)
 	  {
-          case GET_CLIENT_FD：
-          	   if(*(int *)single_data == pdata->client_fd)
-	           {
-	     			*client_data = t->clidata;
-		 			return SUCCESS;
-	 		   }
-	 		   break;
-		  case GET_READ_THREAD_ID:
-		        if(*(int *)single_data == pdata->read_thread_id)
-	           {
-	     			*client_data = t->clidata;
-		 			return SUCCESS;
-	 		   }
-	 		   break;
-		  case GET_WRITE_THREAD_ID:
-		       if(*(int *)single_data == pdata->write_thread_id)
-	           {
-	     			*client_data = t->clidata;
-		 			return SUCCESS;
-	 		   } 
-	 		   break;
-		  case GET_CLIENT_PORT:
-		       if(*(int *)single_data == pdata->client_port)
-	           {
-	     			*client_data = t->clidata;
-		 			return SUCCESS;
-	 		   } 
-	 		   break;
-		  case GET_CLIENT_IP_INFO:
-		       if(0 == strcmp((char *)single_data, pdata->ip_info)
-	           {
-	     			*client_data = t->clidata;
-		 			return SUCCESS;
-	 		   } 
-	 		   break;
-	 	  default:break;
+	     *client_data = t->clidata;
+		 return SUCCESS;
 	  }
    }
    MY_PRINTF("No correlation data found.\n");
@@ -81,7 +46,7 @@ int insert_klist(pk_list h,cli_data data)
 	return SUCCESS;
 }
 
-//链表中删除指定选项,根据端口号
+//链表中删除指定选项,根据客户所在
 int delet_kdata(pk_list h,int port)
 {
 
