@@ -1,4 +1,4 @@
-#if 1
+#if DEBUG_FLAG1
 #include "klist.h"
 int main(void)
 {
