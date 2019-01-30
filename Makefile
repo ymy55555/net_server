@@ -3,7 +3,7 @@
 
 #编译标志
 CC = gcc
-DEBUG = -g -O2 -Wall
+DEBUG = -g -O2 -Wall -DEBUG_FLAG1=0
 COMPILE = -lpthread
 CFLAGS += $(DEBUG)
 EX_FLAGS += $(COMPILE)
