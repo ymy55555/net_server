@@ -53,7 +53,7 @@ int getdata_klist(pk_list h,void *single_data, int data_flag, void **client_data
 	 		   } 
 	 		   break;
 	 	
-	 	  case GET_LIENT_STATE:
+	 	  case GET_CLIENT_STATE:
 	 	       if(*(int *)single_data == pdata->client_state)
 	           {
 	     			*client_data = t->clidata;
@@ -161,7 +161,7 @@ int delet_kdata(pk_list h, void *single_data, int data_flag)
 			       p = list_entry(p->list.prev,k_list,list);
 			   }
 	 		   break;
-	 	  case GET_LIENT_STATE:
+	 	  case GET_CLIENT_STATE:
 	 	       if(pdata->client_state== *(int *)single_data)
 			   {
 			       t = p;
@@ -259,7 +259,7 @@ int replace_klist(pk_list h,void *single_data, int data_flag, cli_data data)
 			       p = list_entry(p->list.prev,k_list,list);
 			   }
 	 		   break;
-	 	  case GET_LIENT_STATE:
+	 	  case GET_CLIENT_STATE:
 	 	       if(pdata->client_state== *(int *)single_data)
 			   {
 			       list_replace(&p->list, &temp->list);
@@ -312,5 +312,3 @@ void show_klist(pk_list h)
     }
     return;
 }
-
-
