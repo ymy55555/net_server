@@ -17,8 +17,8 @@ typedef struct klist
 typedef struct client_data
 {
     int client_fd;
-	int read_thread_id;
-	int write_thread_id;
+	unsigned long int read_thread_id;
+	unsigned long int write_thread_id;
 	int client_port;
 	int client_state;
 	char ip_info[IP_LENGTH];
