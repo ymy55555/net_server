@@ -305,8 +305,8 @@ void show_klist(pk_list h)
         printf("client_port:%d\n", client_data->client_port);
         printf("client_state:%d\n", client_data->client_state);
         printf("ip_info:%s\n", client_data->ip_info); 
-        printf("read_thread_id:%d\n", client_data->read_thread_id);
-        printf("write_thread_id:%d\n\n", client_data->write_thread_id);
+        printf("read_thread_id:%lu\n", client_data->read_thread_id);
+        printf("write_thread_id:%lu\n\n", client_data->write_thread_id);
            
 
     }
