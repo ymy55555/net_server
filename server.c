@@ -1,8 +1,10 @@
 #include "server_common.h"
 #include "common.h"
 #include "klist.h"
+#include "cirqueue.h"
 int g_sys_state = 1;
 pk_list g_pklist;
+cir_pqueue g_cirpq;
 
 int main(int argc,char *argv[])
 {
@@ -15,7 +17,12 @@ int main(int argc,char *argv[])
 	}
 	if (SUCCESS != init_klist(&g_pklist))
     {
-        MY_PRINTF("Init_klist failed.\n");
+        MY_PRINTF("Init klist failed.\n");
+        return NORMAL_EXIT;
+    }
+    if(SUCCESS != cirqueue_init(&g_cirpq))
+    {	
+        MY_PRINTF("Init circle queue failed.\n");
         return NORMAL_EXIT;
     }
     if(SUCCESS != socKet_init(argv[1]))
@@ -42,4 +49,5 @@ int main(int argc,char *argv[])
 8.对整个运行追加全局控制
 9.对每个客户端数据追加标识，且每个客户端单独终端
 10.数据规范化，比如对齐之类
-****************************/
+11.利用共享内存实现线程读写的非阻塞
+******/
