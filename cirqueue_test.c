@@ -1,4 +1,4 @@
-#if CIRQUEUE
+#if debug_cirqueue
 #include "cirqueue.h"
 
 int main(void)
