@@ -5,13 +5,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "common.h"
+#include "server_common.h"
 
 #define CIRCLE_QUEUE_SIZE 10000
 
-typedef int cirqueue_datatype;//这里的int可以替换为其他数据结构来实现队列数据类型更新
-
-typedef struct cirqueue{
-      cirqueue_datatype cirqueue_data[CIRCLE_QUEUE_SIZE];//这里定义数据那类型主要是为了将来数据灵活性，可以用void *替换简化
+typedef st_cli_info cirqueue_datatype;
+typedef struct cirqueue
+{
+      cirqueue_datatype queue_data[CIRCLE_QUEUE_SIZE];
       int rear,front;
 }cir_queue,*cir_pqueue;
 
