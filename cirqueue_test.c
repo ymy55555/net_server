@@ -1,9 +1,9 @@
-#if debug_cirqueue
+#if CIRQUEUE
 #include "cirqueue.h"
 
 int main(void)
 {
-      cirqueue_datatype data;
+      cirqueue_datatype insert_qdata, out_qdata;
       cir_pqueue pq;
       char gchar;
       cirqueue_init(&pq);
@@ -18,14 +18,15 @@ int main(void)
     		{
     		    
                 MY_PRINTF("please input a integer data:\n");
-    		    scanf("%d",&data);
-        	    if(data == -1){break;}
-        		cirqueue_insert(pq,data);
+    		    //入队
+    		    qdata.cli_fd = 55;
+    		    cirqueue_insert(pq, qdata)
         		cirqueue_display(pq);
     		}
     		else if('2' == gchar)
     		{
-    		   cirqueue_out(pq,&data);
+    		  //出队
+    		   cirqueue_out(pq, &out_qdata)
     		   cirqueue_display(pq);
     		}else if('3' == gchar)
     		{
