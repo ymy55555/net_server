@@ -25,7 +25,7 @@ int cirqueue_insert(cir_pqueue pq,cirqueue_datatype insert_data)
       }
 
       pq->rear = (pq->rear+1)%CIRCLE_QUEUE_SIZE;
-      pq->cirqueue_data[pq->rear] = insert_data;
+      pq->queue_data[pq->rear] = insert_data;
 
       return SUCCESS;
 }
@@ -40,7 +40,7 @@ int cirqueue_out(cir_pqueue pq,cirqueue_datatype *out_data)
       }
 
       pq->front = (pq->front+1)%CIRCLE_QUEUE_SIZE;
-      *out_data = pq->cirqueue_data[pq->front];
+      *out_data = pq->queue_data[pq->front];
 
       return SUCCESS;
 }
@@ -67,12 +67,28 @@ bool cirqueue_empty(cir_pqueue pq)
 void cirqueue_display(cir_pqueue pq)
 {
       int i;
-	  printf("circle queue data start:\n");
+      char cli_ip_addr[16] = {0};
+      if(SUCCESS == cirqueue_empty(pq))
+      {
+           return;
+      }
+	  printf("\n---------------circle queue data start---------------\n");
       for(i=(pq->front+1)%CIRCLE_QUEUE_SIZE;i!=(pq->rear+1)%CIRCLE_QUEUE_SIZE;i=(i+1)%CIRCLE_QUEUE_SIZE)
 	  {
-	      printf("%d\t",pq->cirqueue_data[i]);
+	     if(inet_ntop(AF_INET, (const void *)&pq->queue_data[i].cinfo.sin_addr.s_addr, cli_ip_addr, sizeof(pq->queue_data[i].cinfo)) != NULL) 
+    	 {
+             printf("client :%d\n", i);
+             printf("     IP:%s\n", cli_ip_addr);
+             printf("   PORT:%d\n", ntohs(pq->queue_data[i].cinfo.sin_port));
+         } 
+    	 else 
+    	 {
+            MY_PRINTF("queue info printf is failed.\n");
+            return;
+         }
+         printf("\n");
 	  }
-	  printf("\ncircle queue data end:\n");
+	  printf("---------------circle queue data end--------------\n");
       printf("\n");
       return;
 }
