@@ -63,24 +63,27 @@ int create_main_thread(void)
 	 int newfd = -1;
 	 st_cli_info stinfo;
 	 struct sockaddr_in cinfo;
-	 cirqueue_datatype cirq_data;
+	 cirqueue_datatype qdata;
 	 socklen_t addr_len = sizeof(cinfo);
      while(g_sys_state) 
 	 {
 		newfd = accept(fd, (struct sockaddr *)&cinfo, &addr_len);
+		stinfo.cli_fd = newfd;
+	    memcpy(&stinfo.cinfo, &cinfo, sizeof(cinfo));	
 		if(newfd > 0)
 		{
-		   if(SUCCESS != cirqueue_insert(g_cirpq, newfd))
+		//将连接成功的fd和cinfo放入队列，
+		   if(SUCCESS != cirqueue_insert(g_cirpq, stinfo))
 		   {
                MY_PRINTF("circle queue is full, please connect later!\n"); 
 		   }
 		}
-		if(SUCCESS == cirqueue_out(g_cirpq, &cirq_data))
+		
+         cirqueue_display(g_cirpq);
+		//取出队列的客户端信息，并搭建客户端
+		if(SUCCESS == cirqueue_out(g_cirpq, &qdata))
 		{
-		    /* 给客户端结构体赋值*/
-			stinfo.cli_fd = cirq_data;
-			memcpy(&stinfo.cinfo, &cinfo, sizeof(cinfo));		
-			pthread_create(&tid, NULL, (void *)cli_data_handle, (void *)&stinfo);
+			pthread_create(&tid, NULL, (void *)cli_data_handle, (void *)&qdata);
 		}
     }
     close(fd);
@@ -99,6 +102,7 @@ int cli_data_handle(void *arg)
 	memcpy(&stinfo, arg, sizeof(stinfo));
 	newfd = stinfo.cli_fd;
 
+    //重新给线程取名
 	pthread_name = (char *)malloc(50);
 	if(NULL == pthread_name)
 	{
@@ -106,9 +110,9 @@ int cli_data_handle(void *arg)
 	}
 	sprintf(pthread_name, "client_main_pthread_%d", newfd);
     prctl(PR_SET_NAME, (unsigned long)(*pthread_name), 0, 0, 0);//多余操作，但提供了一种简洁的标识线程的方法
-    
+
+    //打印客户端信息
 	memcpy(&cinfo, &stinfo.cinfo, sizeof(cinfo));
-	
 	if(inet_ntop(AF_INET, (const void *)&cinfo.sin_addr.s_addr, cli_ip_addr, sizeof(cinfo)) != NULL) 
 	{
 		MY_PRINTF("Client(IP:%s--PORT:%d) is connected!\n", cli_ip_addr, ntohs(cinfo.sin_port));
@@ -118,9 +122,13 @@ int cli_data_handle(void *arg)
         MY_PRINTF("inet_pton false .\n");
         goto PTHREAD_EXIT;
     }
+
+    //为客户端创建读写线程
 	pthread_t t_read_id, t_write_id;
 	pthread_create(&t_read_id, NULL, (void *)read_data_handle, &newfd);
 	pthread_create(&t_write_id, NULL, (void *)write_data_handle, &newfd);
+
+	//将客户端信息放入内核链表
     cdata.client_fd = newfd;
 	cdata.read_thread_id = t_read_id;
 	cdata.write_thread_id = t_write_id;
@@ -131,8 +139,11 @@ int cli_data_handle(void *arg)
 	
     bool tell_flag = true;	
 	int detect_pthread(pthread_t tid);
+
+
     while(tell_flag)
 	{
+	//监控读写线程
 		if(THREAD_ALIVE != detect_pthread(t_read_id))
 		{
 		    MY_PRINTF("Client(IP:%s--PORT:%d)--read read thread is exited,wait write pthread wait...\n", cli_ip_addr, ntohs(cinfo.sin_port));
@@ -140,6 +151,7 @@ int cli_data_handle(void *arg)
 		    pthread_join(t_write_id, NULL);
 		    MY_PRINTF("Client(IP:%s--PORT:%d)--read and write pthread all exit.\n", cli_ip_addr, ntohs(cinfo.sin_port));
 			tell_flag = false;
+			break;
 		}else if(THREAD_ALIVE != detect_pthread(t_write_id))
 		{
 		
@@ -148,10 +160,11 @@ int cli_data_handle(void *arg)
 		    pthread_join(t_read_id, NULL);
 		    MY_PRINTF("Client(IP:%s--PORT:%d)--read and write pthread all exit.\n", cli_ip_addr, ntohs(cinfo.sin_port));
 			tell_flag = false;
+			break;
 		}
 	}
 PTHREAD_EXIT:
-;//使读写线程退出
+;//使读写线程退出。。。。
 	close(newfd);
 	pthread_exit(NULL);
 	return SUCCESS;//象征意义
