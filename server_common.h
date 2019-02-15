@@ -19,6 +19,8 @@
 #include<sys/ioctl.h>
 #include<stdbool.h>
 #include<signal.h>
+#include <sys/prctl.h>
+
 
 typedef struct cli_info{
     int cli_fd;
