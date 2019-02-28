@@ -437,7 +437,10 @@ rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensourc
 rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 	    (enabled && led->rt2x00dev->curr_band == IEEE80211_BAND_2GHZ);
 rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 	if (led->type == LED_TYPE_RADIO) {
 rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 		rt2x00_set_field16(&led->rt2x00dev->led_mcu_reg,
-rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 		rt61pci_mcu_request(led->rt2x00dev, MCU_LED, 0xff,
+rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 		rt
+
+
+61pci_mcu_request(led->rt2x00dev, MCU_LED, 0xff,
 rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 				    (led->rt2x00dev->led_mcu_reg & 0xff),
 rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 				    ((led->rt2x00dev->led_mcu_reg >> 8)));
 rt61pci_brightness_set in rt61pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\rt2x00) : 	} else if (led->type == LED_TYPE_ASSOC) {
@@ -508,3 +511,83 @@ xirc2ps_cs.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\dr
 xirc2ps_cs.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\xircom) line 166 :  *  0 disabled		   Bits 5-3 for led 2
 read_pod in zd_chip.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\zd1211rw) : 		"patch 6M %d new PHY %d link LED%d tx led %d\n",
 zd_chip.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wireless\zd1211rw) line 756 : /* 0x2 - link led on? */
+
+
+
+
+删除无线后
+=======================================
+bnx2x_set_led in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 		DP(NETIF_MSG_LINK, "bnx2x_set_led: Invalid led mode %d\n",
+bnx2x_set_e1e2_module_fault_led in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 		DP(NETIF_MSG_LINK, "Set fault module-detected led "
+bnx2x_set_e1e2_module_fault_led in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 		DP(NETIF_MSG_LINK, "Error: Invalid fault led mode 0x%x\n",
+bnx2x_sfp_module_detection in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 		/* Turn on fault module-detected led */
+bnx2x_sfp_module_detection in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 		/* Turn off fault module-detected led */
+bnx2x_handle_module_detect_int in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 	/* Set valid module led off */
+bnx2x_5461x_set_link_led in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 	DP(NETIF_MSG_LINK, "54618x set link led (mode=%x)\n", mode);
+bnx2x_link_reset in bnx2x_link.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 	 /* clear link led */
+bnx2x_phy in bnx2x_link.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) : 	/* Set link led mode (on/off/oper)*/
+bnx2x_link.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 345 : /* Set/Unset the led
+bnx2x_link.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 346 :    Basically, the CLC takes care of the led for the link, but in case one needs
+bnx2x_link.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 347 :    to set/unset the led unnaturally, set the "mode" to LED_MODE_OPER to
+bnx2x_link.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 348 :    blink the led, and LED_MODE_OFF to set the led off.*/
+bnx2x_reg.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 1883 : /* [RW 1] led 10g for port 0 */
+bnx2x_reg.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 1885 : /* [RW 1] led 10g for port 1 */
+bnx2x_reg.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\broadcom\bnx2x) line 1916 : /* [RW 4] led mode for port0: 0 MAC; 1-3 PHY1; 4 MAC2; 5-7 PHY4; 8-MAC3;
+cassini.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\sun) line 424 : #define   SATURN_PCFG_LAD             0x00000800 /* 0 = mac core led ctrl
+cassini.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\sun) line 427 : 						    1 = mac core led ctrl
+led_indication in drvfbi.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\fddi\skfp) : 	/* Ring up = yellow led OFF*/
+led_indication in drvfbi.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\fddi\skfp) : 		/* Link at Port A/S = green led A ON */
+led_indication in drvfbi.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\fddi\skfp) : 		/* Link at Port B = green led B ON */
+e1000_mac.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\igb) line 1298 :  *  Blink the led's which are set to be on.
+e1000_led_on_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 	u32 i, led;
+e1000_led_on_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 			led = (data >> (i * 5)) & E1000_PHY_LED0_MASK;
+e1000_led_on_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 			if ((led & E1000_PHY_LED0_MODE_MASK) !=
+e1000_led_on_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 			if (led & E1000_PHY_LED0_IVRT)
+e1000_led_off_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 	u32 i, led;
+e1000_led_off_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 			led = (data >> (i * 5)) & E1000_PHY_LED0_MASK;
+e1000_led_off_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 			if ((led & E1000_PHY_LED0_MODE_MASK) !=
+e1000_led_off_pchlan in ich8lan.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\e1000e) : 			if (led & E1000_PHY_LED0_IVRT)
+ixgbe_common.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\ixgbe) line 544 :  *  @index: led number to turn on
+ixgbe_common.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\ixgbe) line 562 :  *  @index: led number to turn off
+ixgbe_common.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\ixgbe) line 2656 :  *  @index: led number to blink
+ixgbe_common.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\ixgbe) line 2690 :  *  @index: led number to stop blinking
+ixgbe_x540.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\ixgbe) line 745 :  * @index: led number to blink
+ixgbe_x540.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\intel\ixgbe) line 781 :  * @index: led number to stop blinking
+lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) line 30 :   * lmc_dec_reset() functions, as well as the led controls and the
+lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) line 1937 : void lmc_led_on(lmc_softc_t * const sc, u32 led) /*fold00*/
+lmc_led_on in lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) :     if((~sc->lmc_miireg16) & led){ /* Already on! */
+lmc_led_on in lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) :     sc->lmc_miireg16 &= ~led;
+lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) line 1950 : void lmc_led_off(lmc_softc_t * const sc, u32 led) /*fold00*/
+lmc_led_off in lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) :     if(sc->lmc_miireg16 & led){ /* Already set don't do anything */
+lmc_led_off in lmc_main.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) :     sc->lmc_miireg16 |= led;
+lmc_t1_get_link_status in lmc_media.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\wan\lmc) :      * Use the green bit to identify which one lit the led
+led_link in mv88x201x.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\chelsio\cxgb) : 	u32 led = 0;
+led_link in mv88x201x.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\chelsio\cxgb) : 	cphy_mdio_read(cphy, MDIO_MMD_PMAPMD, MDIO_CTRL2, &led);
+led_link in mv88x201x.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\chelsio\cxgb) : 		led |= LINK_ENABLE_BIT;
+led_link in mv88x201x.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\chelsio\cxgb) : 		cphy_mdio_write(cphy, MDIO_MMD_PMAPMD, MDIO_CTRL2, led);
+led_link in mv88x201x.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\chelsio\cxgb) : 		led &= ~LINK_ENABLE_BIT;
+led_link in mv88x201x.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\chelsio\cxgb) : 		cphy_mdio_write(cphy, MDIO_MMD_PMAPMD, MDIO_CTRL2, led);
+xcvr_init_10g_mrvl88x2011 in niu.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\sun) : 	/* led activity */
+pcnet32_set_phys_id in pcnet32.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\amd) : 		/* Blink the led */
+peak_pciec_card in peak_pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 	struct delayed_work led_work;	/* led delayed work */
+peak_pciec_write_pca9553 in peak_pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 	/* cache led mask */
+peak_pciec_led_work in peak_pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 		/* if bytes counters changed, set fast blinking led */
+peak_pciec_write_reg in peak_pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 			/* Reset Mode: set led on */
+peak_pciec_write_reg in peak_pci.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 			/* Normal Mode: led slow blinking and start led timer */
+peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) line 72 : /* led selection bits */
+peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) line 76 : /* led state value */
+pcan_write_canreg in peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 			/* Reset Mode: set led on */
+pcan_write_canreg in peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 			/* Normal Mode: led slow blinking and start led timer */
+pcan_set_leds in peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 			/* clear corresponding led bits in ccr */
+pcan_led_timer in peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 		/* if bytes counters changed, set fast blinking led */
+pcan_add_channels in peak_pcmcia.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\can\sja1000) : 		/* set corresponding led on in the new ccr */
+phy.h (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\sfc) line 37 : extern void falcon_qt202x_set_led(struct efx_nic *p, int led, int state);
+qt202x_phy.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\sfc) line 53 : void falcon_qt202x_set_led(struct efx_nic *p, int led, int mode)
+falcon_qt202x_set_led in qt202x_phy.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\sfc) : 	int addr = MDIO_QUAKE_LED0_REG + led;
+s2io.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\neterion) line 5432 :  *  s2io_set_led - control NIC led
+s2io.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\neterion) line 5464 :  * @state: led setting
+xirc2ps_cs.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\xircom) line 165 : /* values for the leds:    Bits 2-0 for led 1
+xirc2ps_cs.c (Y:\arm\Hi3516A_SDK_V1.0.5.0\osdrv\opensource\kernel\linux-3.4.y\drivers\net\ethernet\xircom) line 166 :  *  0 disabled		   Bits 5-3 for led 2
+
+
+
